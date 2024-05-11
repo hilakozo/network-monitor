@@ -33,11 +33,15 @@ def main():
     alert_root.title("Alerts")
     alert_window = AlertWindow(alert_root)
 
-    graph_root = tk.Toplevel(root)
-    graph_root.title("Network Graph")
-    graph = SimpleNetworkGraph(graph_root)
+    if args.graph:
+        graph_root = tk.Toplevel(root)
+        graph_root.title("Network Graph")
+        graph = SimpleNetworkGraph(graph_root)
+    else:
+        graph = None
 
-    network_monitor = NetworkMonitor(graph=graph, alert_window=alert_window)
+    network_monitor = NetworkMonitor(graph=graph, alert_window=alert_window,
+                                     low_threshold=args.low, high_threshold=args.high)
 
     stop_event = Event()
 

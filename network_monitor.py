@@ -1,6 +1,6 @@
 import time
 import psutil
-import config as config
+import config
 from alert_system import AlertWindow
 from graph import SimpleNetworkGraph
 
@@ -15,7 +15,10 @@ class NetworkMonitor:
     _graph: SimpleNetworkGraph
     _alert_window: AlertWindow
 
-    def __init__(self, graph: SimpleNetworkGraph, alert_window: AlertWindow):
+    def __init__(self, graph: SimpleNetworkGraph, alert_window: AlertWindow, low_threshold=2, high_threshold=50):
+        self.low_threshold = low_threshold
+        self.high_threshold = high_threshold
+
         self._graph = graph
         self._alert_window = alert_window
         self._count_of_network_down = 0
@@ -48,11 +51,14 @@ class NetworkMonitor:
         message = ""
         if self._count_of_network_down > MAX_NUMBER_OF_NETWORK_DOWN:
             message = NETWORK_DOWN_MSG
-        if traffic_count < config.LOW_NETWORK_THRESHOLD:
+        elif traffic_count == 0:
+            self._count_of_network_down += 1
+        elif traffic_count < self.low_threshold:
             message = LOW_NETWORK_MSG
-        if traffic_count > config.HIGH_NETWORK_THRESHOLD:
+        elif traffic_count > self.high_threshold:
             message = HIGH_NETWORK_MESSAGE
         if message:
+            self._count_of_network_down = 0
             self._alert_window.show_alert(message + f"{traffic_count}")
 
     def _draw_graph(self, traffic_count: int):
@@ -64,4 +70,5 @@ class NetworkMonitor:
             while True:
                 traffic_count = NetworkMonitor._get_network_io_per_second()
                 self._send_alert(traffic_count)
-                self._draw_graph(traffic_count)
+                if self._graph:
+                    self._draw_graph(traffic_count)
