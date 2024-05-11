@@ -1,4 +1,5 @@
 import pyshark
+import os
 
 
 def analyze_pcap(file_path):
@@ -37,5 +38,7 @@ def analyze_pcap(file_path):
         print(f'  {method}: {count}')
 
 
-# file path, change if you need
-analyze_pcap(r'C:\Users\yoavi\Documents\hila\parsing pcap\parsing the pcap httpforever.pcap')
+# file path
+pcap_file = 'parsing the pcap httpforever.pcap'
+full_pcap_path = os.path.join(os.path.dirname(__file__), pcap_file)
+analyze_pcap(full_pcap_path)
