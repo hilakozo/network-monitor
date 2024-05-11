@@ -3,6 +3,6 @@
 - chmod +x run.sh
 - ./run.sh
 
-# network-monitor - Q2
+# parsing pcap - Q2
 - cd "parsing pcap"
 - python parsing.py
