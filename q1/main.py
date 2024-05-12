@@ -13,7 +13,6 @@ def parse_args():
     parser.add_argument("--high", type=int, default=50, help="Set the high threshold for packet rate alerts")
     parser.add_argument("--graph", action="store_true", help="Display the graph for packet rates")
     args = parser.parse_args()
-    print(f"Parsed arguments: {args}")  # Debug print
     return args
 
 
