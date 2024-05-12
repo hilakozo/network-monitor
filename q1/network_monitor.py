@@ -65,7 +65,6 @@ class NetworkMonitor:
         self._graph.update_graph(traffic_count)
 
     def run(self, stop_event):
-        print("Monitoring network...")  # Debug print
         while not stop_event.is_set():
             while True:
                 traffic_count = NetworkMonitor._get_network_io_per_second()
