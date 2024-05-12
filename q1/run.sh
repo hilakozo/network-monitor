@@ -46,7 +46,7 @@ if [[ "$cron_response" == "yes" ]]; then
 fi
 
 
-#echo "Setting up Python virtual environment..."
+echo "Setting up Python virtual environment..."
 python3 -m venv venv
 source venv/bin/activate
 echo "Installing dependencies from requirements.txt..."
